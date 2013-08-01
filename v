@@ -1,7 +1,11 @@
-#!/usr/bin/env sh
+#!/usr/bin/env ruby
 
-if [ $# -eq 0 ]; then
-  mvim .
+if ARGV.size == 1 && ARGV.first =~ /(.+):(\d+)$/
+  args = [$1, "+#{$2}"]
+elsif ARGV.empty?
+  args = ['.']
 else
-  mvim $@
-fi
+  args = ARGV
+end
+
+exec args.unshift('mvim').join(' ')
