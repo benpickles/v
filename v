@@ -1,11 +1,18 @@
 #!/usr/bin/env ruby
 
-if ARGV.size == 1 && ARGV.first =~ /(.+):(\d+)$/
-  args = [$1, "+#{$2}"]
-elsif ARGV.empty?
-  args = ['.']
+args = if ARGV.empty?
+  session_path = File.join(Dir.pwd, 'Session.vim')
+
+  if File.exist?(session_path)
+    ['-S', session_path]
+  else
+    ['.']
+  end
+elsif ARGV.last =~ /^([^:]+):(\d+)\b/
+  [$1, "+#{$2}"]
 else
-  args = ARGV
+  ARGV.dup
 end
 
-exec args.unshift('mvim').join(' ')
+cmd = args.unshift('mvim')
+exec *cmd
