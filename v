@@ -1,6 +1,9 @@
 #!/usr/bin/env ruby
 
-args = if ARGV.empty?
+argv = ARGV.dup
+dry_run = argv.reject! { |arg| arg == '--dry-run' }
+
+args = if argv.empty?
   session_path = File.join(Dir.pwd, 'Session.vim')
 
   if File.exist?(session_path)
@@ -8,11 +11,16 @@ args = if ARGV.empty?
   else
     ['.']
   end
-elsif ARGV.last =~ /^([^:]+):(\d+)\b/
+elsif argv.last =~ /^([^:]+):(\d+)\b/
   [$1, "+#{$2}"]
 else
-  ARGV.dup
+  argv
 end
 
 cmd = args.unshift('mvim')
-exec *cmd
+
+if dry_run
+  puts cmd.join(' ')
+else
+  exec *cmd
+end
