@@ -12,7 +12,7 @@ args = if argv.empty?
   session_path = File.join(Dir.pwd, 'Session.vim')
 
   if File.exist?(session_path)
-    ['-S', session_path]
+    ['-S']
   else
     ['.']
   end
