@@ -11,10 +11,26 @@ describe '`v`' do
     FileUtils.rm_r(tmpdir)
   end
 
-  def v(args = nil)
+  def v(args = nil, env = { 'EDITOR' => nil })
     Dir.chdir tmpdir do
       capture_subprocess_io do
-        system("#{v_path} --dry-run #{args}")
+        system(env, "#{v_path} --dry-run #{args}")
+      end
+    end
+  end
+
+  describe 'when EDITOR is defined' do
+    describe 'uses EDITOR' do
+      it do
+        stdout, _ = v(nil, { 'EDITOR' => 'foo' })
+        assert_equal "foo .\n", stdout
+      end
+    end
+
+    describe 'when EDITOR is not defined' do
+      it 'defaults to `vim`' do
+        stdout, _ = v
+        assert_equal "vim .\n", stdout
       end
     end
   end
@@ -28,14 +44,14 @@ describe '`v`' do
 
       it do
         stdout, _ = v
-        assert_equal "mvim -S\n", stdout
+        assert_equal "vim -S\n", stdout
       end
     end
 
     describe 'otherwise' do
       it do
         stdout, _ = v
-        assert_equal "mvim .\n", stdout
+        assert_equal "vim .\n", stdout
       end
     end
   end
@@ -44,21 +60,21 @@ describe '`v`' do
     describe 'when line is a number' do
       it do
         stdout, _ = v('path/to/file:123')
-        assert_equal "mvim path/to/file +123\n", stdout
+        assert_equal "vim path/to/file +123\n", stdout
       end
     end
 
     describe 'when line is not a number' do
       it do
         stdout, _ = v('path/to/file:foo')
-        assert_equal "mvim path/to/file:foo\n", stdout
+        assert_equal "vim path/to/file:foo\n", stdout
       end
     end
 
     describe 'when line is blank' do
       it do
         stdout, _ = v('path/to/file:')
-        assert_equal "mvim path/to/file:\n", stdout
+        assert_equal "vim path/to/file:\n", stdout
       end
     end
   end

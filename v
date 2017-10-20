@@ -22,7 +22,8 @@ else
   argv
 end
 
-cmd = args.unshift('mvim')
+editor = ENV.fetch('EDITOR', 'vim')
+cmd = args.unshift(editor)
 
 if dry_run
   puts cmd.join(' ')
