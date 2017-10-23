@@ -1,5 +1,7 @@
 # `v`, a Vim command line wrapper
 
+[![Build Status](https://travis-ci.org/benpickles/v.svg?branch=master)](https://travis-ci.org/benpickles/v)
+
 I wrote `v` to help with a couple of my common wants when starting Vim, it’s a script written in Ruby and the [source is on GitHub](https://github.com/benpickles/v). Here are the two things it does.
 
 ## Open `path/to/file:line-number`
