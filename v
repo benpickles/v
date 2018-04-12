@@ -8,7 +8,9 @@ end
 argv = ARGV.dup
 dry_run = argv.reject! { |arg| arg == '--dry-run' }
 
-args = if argv.empty?
+args = if !$stdin.tty?
+  ['-']
+elsif argv.empty?
   session_path = File.join(Dir.pwd, 'Session.vim')
 
   if File.exist?(session_path)

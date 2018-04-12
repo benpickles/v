@@ -11,10 +11,15 @@ describe '`v`' do
     FileUtils.rm_r(tmpdir)
   end
 
-  def v(args: nil, env: { 'EDITOR' => nil })
+  def touch_session_vim
+    session_path = File.join(tmpdir, 'Session.vim')
+    FileUtils.touch(session_path)
+  end
+
+  def v(args: nil, env: { 'EDITOR' => nil }, pre: nil)
     Dir.chdir tmpdir do
       capture_subprocess_io do
-        system(env, "#{v_path} --dry-run #{args}")
+        system(env, "#{pre}#{v_path} --dry-run #{args}")
       end
     end
   end
@@ -38,8 +43,7 @@ describe '`v`' do
   describe 'with no arguments' do
     describe 'when Session.vim exists in the current directory' do
       before do
-        session_path = File.join(tmpdir, 'Session.vim')
-        FileUtils.touch(session_path)
+        touch_session_vim
       end
 
       it do
@@ -83,6 +87,33 @@ describe '`v`' do
     it do
       stdout, _ = v(args: '--help')
       assert stdout.include?('Usage:')
+    end
+  end
+
+  describe 'with stdin' do
+    describe 'with no arguments' do
+      it 'are ignored' do
+        stdout, _ = v(pre: 'echo testy | ')
+        assert_equal "vim -\n", stdout
+      end
+    end
+
+    describe 'extra arguments' do
+      it 'are ignored' do
+        stdout, _ = v(args: 'path/to/file', pre: 'echo testy | ')
+        assert_equal "vim -\n", stdout
+      end
+    end
+
+    describe 'when Session.vim exists in the current directory' do
+      before do
+        touch_session_vim
+      end
+
+      it 'is ignored' do
+        stdout, _ = v(pre: 'echo testy | ')
+        assert_equal "vim -\n", stdout
+      end
     end
   end
 end
