@@ -91,8 +91,17 @@ describe '`v`' do
   end
 
   describe 'with stdin' do
-    describe 'with no arguments' do
-      it 'are ignored' do
+    describe '<' do
+      let(:path_to_readme) { File.expand_path('README.md', __dir__) }
+
+      it do
+        stdout, _ = v(args: "< #{path_to_readme}")
+        assert_equal "vim -\n", stdout
+      end
+    end
+
+    describe '|' do
+      it do
         stdout, _ = v(pre: 'echo testy | ')
         assert_equal "vim -\n", stdout
       end
