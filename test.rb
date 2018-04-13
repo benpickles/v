@@ -24,15 +24,15 @@ describe '`v`' do
     end
   end
 
-  describe 'when EDITOR is defined' do
-    describe 'uses EDITOR' do
-      it do
+  describe 'handling EDITOR environment' do
+    describe 'when it is defined' do
+      it 'is used' do
         stdout, _ = v(env: { 'EDITOR' => 'foo' })
         assert_equal "foo .\n", stdout
       end
     end
 
-    describe 'when EDITOR is not defined' do
+    describe 'when it is not defined' do
       it 'defaults to `vim`' do
         stdout, _ = v
         assert_equal "vim .\n", stdout
