@@ -116,4 +116,11 @@ describe '`v`' do
       end
     end
   end
+
+  describe 'other arguments' do
+    it 'are forwarded' do
+      stdout, _ = v(args: '-foo -bar')
+      assert_equal "vim -foo -bar\n", stdout
+    end
+  end
 end
