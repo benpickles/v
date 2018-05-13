@@ -86,16 +86,16 @@ describe '`v`' do
   describe 'with --help' do
     it do
       stdout, _ = v(args: '--help')
-      assert stdout.include?('Usage:')
-      assert stdout.include?('Version:')
+      assert_match 'Usage:', stdout
+      assert_match /Version: \d/, stdout
     end
   end
 
   describe 'with --version' do
     it do
       stdout, _ = v(args: '--version')
-      assert stdout.include?('https://github.com/benpickles/v')
-      assert stdout.include?('vim --version')
+      assert_match 'https://github.com/benpickles/v', stdout
+      assert_match 'vim --version', stdout
     end
   end
 
