@@ -85,9 +85,10 @@ describe '`v`' do
 
   describe 'with --help' do
     it do
-      stdout, _ = v(args: '--help')
+      stdout, _ = v(args: '--help', env: { 'EDITOR' => 'foo' })
       assert_match 'Usage:', stdout
       assert_match /Version: \d/, stdout
+      assert_match 'Wrapping: foo', stdout
     end
   end
 
