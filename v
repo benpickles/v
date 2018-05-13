@@ -1,7 +1,9 @@
 #!/usr/bin/env ruby
 
+VERSION = '1.1.0'
+
 if ARGV.include?('--help')
-  puts DATA.read
+  puts DATA.read.gsub('#{VERSION}', VERSION)
   exit
 end
 
@@ -21,6 +23,10 @@ elsif argv.empty?
 elsif argv.last =~ /^([^:]+):(\d+)\b/
   [$1, "+#{$2}"]
 else
+  if argv.include?('--version')
+    puts "v #{VERSION} - https://github.com/benpickles/v"
+  end
+
   argv
 end
 
@@ -57,4 +63,6 @@ __END__
   directory then it will loaded as a Vim session.
 
   Otherwise the current directory will be opened.
+
+  Version: #{VERSION}
 

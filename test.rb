@@ -87,6 +87,15 @@ describe '`v`' do
     it do
       stdout, _ = v(args: '--help')
       assert stdout.include?('Usage:')
+      assert stdout.include?('Version:')
+    end
+  end
+
+  describe 'with --version' do
+    it do
+      stdout, _ = v(args: '--version')
+      assert stdout.include?('https://github.com/benpickles/v')
+      assert stdout.include?('vim --version')
     end
   end
 
