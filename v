@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 EDITOR = ENV.fetch('EDITOR', 'vim')
-VERSION = '1.1.0'
+VERSION = '1.2.0'
 
 if ARGV.include?('--help')
   puts DATA.read
