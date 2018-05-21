@@ -22,7 +22,10 @@ When `v` is run with no arguments it looks in the current directory for a file c
 
 If `v` detects that it's receiving `stdin` it will automatically read the content so you never have to forget to pass the `-`.
 
-## `--dry-run`
+
+## Other options
+
+### `--dry-run`
 
 To see what `v` will execute for the given arguments add `--dry-run`.
 
@@ -33,6 +36,10 @@ $ v --dry-run ./spec/path/to/failure_spec.rb:123
 vim ./spec/path/to/failure_spec.rb +123
 ```
 
-## `--help`
+### `--help`
 
 What command line script would be complete without corresponding help? Run `v --help` for usage.
+
+### `--version`
+
+Outputs the version of this script and forwards the command to `$EDITOR`.

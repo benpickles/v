@@ -85,8 +85,18 @@ describe '`v`' do
 
   describe 'with --help' do
     it do
-      stdout, _ = v(args: '--help')
-      assert stdout.include?('Usage:')
+      stdout, _ = v(args: '--help', env: { 'EDITOR' => 'foo' })
+      assert_match 'Usage:', stdout
+      assert_match /Version: \d/, stdout
+      assert_match 'Wrapping: foo', stdout
+    end
+  end
+
+  describe 'with --version' do
+    it do
+      stdout, _ = v(args: '--version')
+      assert_match 'https://github.com/benpickles/v', stdout
+      assert_match 'vim --version', stdout
     end
   end
 

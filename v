@@ -1,7 +1,12 @@
 #!/usr/bin/env ruby
 
+EDITOR = ENV.fetch('EDITOR', 'vim')
+VERSION = '1.1.0'
+
 if ARGV.include?('--help')
   puts DATA.read
+    .gsub('#{EDITOR}', EDITOR)
+    .gsub('#{VERSION}', VERSION)
   exit
 end
 
@@ -21,11 +26,14 @@ elsif argv.empty?
 elsif argv.last =~ /^([^:]+):(\d+)\b/
   [$1, "+#{$2}"]
 else
+  if argv.include?('--version')
+    puts "v #{VERSION} wrapping #{EDITOR} - https://github.com/benpickles/v"
+  end
+
   argv
 end
 
-editor = ENV.fetch('EDITOR', 'vim')
-cmd = args.unshift(editor)
+cmd = args.unshift(EDITOR)
 
 if dry_run
   puts cmd.join(' ')
@@ -40,7 +48,8 @@ __END__
   Options:
 
     --dry-run  Output the command that would have been executed.
-    --help     Output this information.
+    --help     This information.
+    --version  Version information for v and #{EDITOR}.
 
   Content received via stdin will automatically be read.
 
@@ -57,4 +66,7 @@ __END__
   directory then it will loaded as a Vim session.
 
   Otherwise the current directory will be opened.
+
+  Version: #{VERSION}
+  Wrapping: #{EDITOR}
 
