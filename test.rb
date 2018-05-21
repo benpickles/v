@@ -118,9 +118,9 @@ describe '`v`' do
     end
 
     describe 'extra arguments' do
-      it 'are ignored' do
-        stdout, _ = v(args: 'path/to/file', pre: 'echo testy | ')
-        assert_equal "vim -\n", stdout
+      it 'are included' do
+        stdout, _ = v(args: '+123', pre: 'echo testy | ')
+        assert_equal "vim +123 -\n", stdout
       end
     end
 

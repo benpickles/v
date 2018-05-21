@@ -14,7 +14,7 @@ argv = ARGV.dup
 dry_run = argv.reject! { |arg| arg == '--dry-run' }
 
 args = if !$stdin.tty?
-  ['-']
+  argv.push('-')
 elsif argv.empty?
   session_path = File.join(Dir.pwd, 'Session.vim')
 
