@@ -48,7 +48,8 @@ __END__
   Options:
 
     --dry-run  Output the command that would have been executed.
-    --help     Output this information.
+    --help     This information.
+    --version  Version information for v and #{EDITOR}.
 
   Content received via stdin will automatically be read.
 
