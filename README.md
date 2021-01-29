@@ -43,3 +43,7 @@ What command line script would be complete without corresponding help? Run `v --
 ### `--version`
 
 Outputs the version of this script and forwards the command to `$EDITOR`.
+
+## License
+
+This code is available as open source under the terms of the [MIT Licence](https://opensource.org/licenses/MIT).
