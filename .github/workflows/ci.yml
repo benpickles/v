@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby: ['2.6', '2.7', '3.0']
+        ruby: ['2.6'] #, '2.7', '3.0']
     name: Test on ${{ matrix.ruby }}
     steps:
     - uses: actions/checkout@v2
@@ -16,3 +16,4 @@ jobs:
         bundler-cache: true
         ruby-version: ${{ matrix.ruby }}
     - run: ruby ./test.rb
+      shell: bash
